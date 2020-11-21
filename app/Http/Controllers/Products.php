@@ -93,4 +93,10 @@ class Products extends Controller
     }
 
 
+    public function agotados() {
+        $task = Product::where('count', '<=', '2')->get();
+        return $task;
+    }
+
+
 }

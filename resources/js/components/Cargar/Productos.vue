@@ -27,7 +27,7 @@
                         <a class="search-tab-link" id="nuevo-tab" data-toggle="tab" href="#nuevo" role="tab" aria-controls="nuevo" aria-selected="true">Cargar nuevo</a>
                     </li>
                     <li class="search-tab-item">
-                        <a class="search-tab-link" id="agotado-tab" data-toggle="tab" href="#agotado" role="tab" aria-controls="agotado" aria-selected="true">Agotados</a>
+                        <a class="search-tab-link" id="agotado-tab" data-toggle="tab" href="#agotado" role="tab" aria-controls="agotado" aria-selected="true">Agotados <span class="badge badge-danger">{{dataAgotados ? dataAgotados.length : '0'}}</span></a>
                     </li>
                 </ul>
 
@@ -45,15 +45,31 @@
                                             <a href="#" class="border"><img v-bind:src="JSON.parse(item.files)[0].path" alt="" /></a>
                                         </div>
                                         <div class="search-result-content">
-                                            <h3><a href="#">{{item.title}} <small>({{item.count}})</small></a></h3>
-                                            <p v-html="item.description">
-                                                {{item.description}}
-                                            </p>
-                                            <a class="mr-4"><b>${{item.saleValue}}</b></a>
-                                            <a href="#" class="mr-4">Estadísticas</a>
-                                            <a href="#" class="mr-4" style="cursor: pointer" v-on:click="editar(item)" data-toggle="modal" data-target=".bd-example-modal-lg">Editar</a>
-                                            <a href="#" v-if="!loadingDelete" class="mr-4 text-danger" v-on:click="deleteItem(item)">Eliminar</a>
-                                            <a href="#" v-if="loadingDelete" class="mr-4 text-danger"><div class="spinner-border spinner-border-sm mr-1" role="status"></div> Eliminando...</a>
+                                            <div class="col-12 p-0 h-100" style="display: grid;">
+                                                <div class="col-12 p-0">
+                                                    <h3><a href="#">{{item.title}} <small>({{item.count}})</small></a></h3>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-bordered table-sm mt-2">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="p-0">Fecha de creación</td>
+                                                                    <td class="p-0"><time-ago :refresh="60" :datetime="new Date(item.created_at)" locale="es" :long="true" tooltip></time-ago></td>
+                                                                    <td class="p-0">Fecha de modificación</td>
+                                                                    <td class="p-0"><time-ago :refresh="60" :datetime="new Date(item.updated_at)" locale="es" :long="true" tooltip></time-ago></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <p v-html="item.description" style="height: 42px;text-overflow: ellipsis;overflow: hidden;"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 p-0 d-flex align-items-end">
+                                                    <a class="mr-4"><b>{{item.saleValue | currency}}</b></a>
+                                                    <a href="#" class="mr-4">Estadísticas</a>
+                                                    <a href="#" class="mr-4" style="cursor: pointer" v-on:click="editar(item)" data-toggle="modal" data-target=".bd-example-modal-lg">Editar</a>
+                                                    <a href="#" v-if="!loadingDelete" class="mr-4 text-danger" v-on:click="deleteItem(item)">Eliminar</a>
+                                                    <a href="#" v-if="loadingDelete" class="mr-4 text-danger"><div class="spinner-border spinner-border-sm mr-1" role="status"></div> Eliminando...</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -96,6 +112,36 @@
                         <div class="col-9 position-fixed d-flex justify-content-center align-items-center"
                         style="z-index: 3; height: 200px">
                             <button type="button" class="btn btn-sm btn-success ml-2" style="height: 35px;" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fas fa-plus"></i> Cargar nuevo producto</button>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="agotado" role="tabpanel" aria-labelledby="agotado-tab">
+                        <div class="search-result">
+                            <div class="search-result-list">
+                                <div class="col-12 p-0" v-if="dataAgotados && dataAgotados.length > 0">
+                                    <div class="search-result-item" v-for="item of dataAgotados" v-bind:key="item.id">
+                                        <div class="search-result-media">
+                                            <a href="#" class="border">
+                                                <img v-bind:src="JSON.parse(item.files)[0].path" alt="" />
+                                            </a>
+                                        </div>
+                                        <div class="search-result-content">
+                                            <h3>
+                                                <a href="#" v-bind:class="item.count == 2 ? 'text-dark' : item.count == 1 ? 'text-warning' : 'text-danger'">
+                                                    {{item.title}} <small>({{item.count}})</small>
+                                                </a>
+                                            </h3>
+                                            <p v-html="item.description">
+                                                {{item.description}}
+                                            </p>
+                                            <a class="mr-4"><b>{{item.saleValue | currency}}</b></a>
+                                            <a href="#" class="mr-4">Estadísticas</a>
+                                            <a href="#" class="mr-4" style="cursor: pointer" v-on:click="editar(item)" data-toggle="modal" data-target=".bd-example-modal-lg">Editar</a>
+                                            <a href="#" v-if="!loadingDelete" class="mr-4 text-danger" v-on:click="deleteItem(item)">Eliminar</a>
+                                            <a href="#" v-if="loadingDelete" class="mr-4 text-danger"><div class="spinner-border spinner-border-sm mr-1" role="status"></div> Eliminando...</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -167,9 +213,9 @@
                                         <vue-upload-multiple-image
                                             @upload-success="uploadImageSuccess"
                                             @before-remove="beforeRemove"
-                                            @edit-image="editImage"
                                             @mark-is-primary="markIsPrimary"
                                             :data-images="images"
+                                            :showEdit="false"
                                             dragText="Agregar imagen"
                                             browseText="Click para explorar"
                                             dropText="Soltar"
@@ -287,6 +333,7 @@
     import { VueEditor } from "vue2-editor";
     import VueUploadMultipleImage from 'vue-upload-multiple-image';
     import {Money} from 'v-money'
+    import TimeAgo from 'vue2-timeago'
 
     import { required, minLength, between } from 'vuelidate/lib/validators'
     const { validationMixin, default: Vuelidate } = require('vuelidate')
@@ -295,12 +342,14 @@
                 VueGoodTable,
                 VueEditor,
                 VueUploadMultipleImage,
-                Money
+                Money,
+                TimeAgo
             },
             data() {
                 return {
                     images: [],
                     data: null,
+                    dataAgotados: null,
                     loadingDelete: false,
                     loadingSearch: false,
                     searchValue: '',
@@ -343,15 +392,11 @@
                 beforeRemove (index, done, fileList) {
                     var r = confirm("Eliminar imagen")
                     if (r == true) {
+                        done();
                         this.form.files = JSON.stringify(fileList);
                         this.changes = true;
-                        done()
                     } else {
                     }
-                },
-                editImage (formData, index, fileList) {
-                    this.form.files = JSON.stringify(fileList);
-                    this.changes = true;
                 },
                 markIsPrimary (index, fileList) {
                     this.form.files = JSON.stringify(fileList);
@@ -369,8 +414,8 @@
                         this.editando = response.data;
                         document.getElementById("closeModal").click();
                         this.setFormValues();
-                        document.getElementById("busqueda-tab").click();
                         this.search();
+                        this.loadAgotados();
                     }).catch(error => {
                         console.log(error.response.data);
                         this.loadingForm = false;
@@ -397,7 +442,7 @@
                     this.form = values || defaultValues;
                 },
                 loadCategories: function() {
-                    axios.get('/api/categories')
+                    axios.get('/api/categories/all')
                     .then((response)=>{
                         this.categories = response.data;
                         // this.categorieId = (response.data.length > 0) && response.data[0].id;
@@ -415,10 +460,11 @@
                     });
                 },
                 editar: function(item) {
+                    item = Object.assign({}, item, {saleValue: parseFloat(item.saleValue).toFixed(2), purchaseValue : parseFloat(item.purchaseValue).toFixed(2)})
                     this.editando = item;
                     this.setFormValues(item);
                     this.images = JSON.parse(item.files);
-                    document.getElementById("busqueda-tab").click();
+                    // document.getElementById("busqueda-tab").click();
                 },
                 cancel: function() {
                     if (this.changes) {
@@ -451,10 +497,17 @@
                             this.loadingDelete = false;
                         });
                     }
+                },
+                loadAgotados() {
+                    axios.get('/api/products/agotados')
+                    .then((response)=>{
+                        this.dataAgotados = response.data;
+                    })
                 }
             },
             mounted() {
                 this.loadCategories();
+                this.loadAgotados();
                 this.setFormValues();
                 this.search();
                 // this.refreshTable();

@@ -25,6 +25,7 @@ Route::post('products',[Products::class, 'add']);
 Route::post('products/addImage',[Products::class, 'addImage']);
 Route::delete('products/{id}',[Products::class, 'delete']);
 Route::get('products/search/{value}',[Products::class, 'search']);
+Route::get('products/agotados',[Products::class, 'agotados']);
 
 // == Categories ==
 Route::get('categories',[Categories::class, 'principal']);

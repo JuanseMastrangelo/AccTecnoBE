@@ -36,6 +36,8 @@
         "vue-google-charts": "^0.3.3",
         "vue-upload-multiple-image": "^1.1.6",
         "vue2-editor": "^2.10.2",
+        "vue2-filters": "^0.11.0",
+        "vue2-timeago": "^1.2.9",
         "vuelidate": "^0.7.6"
     }
 }
