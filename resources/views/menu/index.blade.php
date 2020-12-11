@@ -6,7 +6,7 @@
         <ul class="navbar-nav">
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('home') }}">
-                    <i class="fa fa-home"></i> Inicio <span class="sr-only">(current)</span>
+                    <i class="fa fa-home text-primary"></i> Inicio <span class="sr-only">(current)</span>
                 </a>
             </li>
             <li class="nav-item">

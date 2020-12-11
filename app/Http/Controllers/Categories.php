@@ -22,7 +22,7 @@ class Categories extends Controller
     public function getAll()
     {
         $task = Categorie::select('categories.id', 'categories.name', 'categories.idParent', 'categories.files', DB::raw('COUNT(products.id) AS count'))
-                ->leftjoin('products', 'categories.id', '=', 'products.categorieId')
+                ->leftjoin('products', 'categories.id', '=', 'products.subCategorieId')
                 ->groupBy('categories.id')
                 ->get();
         return $task;
@@ -33,9 +33,8 @@ class Categories extends Controller
         $task = Categorie::select('categories.id', 'categories.name', 'categories.idParent', 'categories.files', DB::raw('COUNT(products.id) AS count'))
                 ->leftjoin('products', 'categories.id', '=', 'products.categorieId')
                 ->groupBy('categories.id')
-                ->where('idParent','')
+                ->where('idParent', '=', NULL)
                 ->get();
-        
         // $task = Product::where('categorieId', '=', $id);
         return $task;
     }

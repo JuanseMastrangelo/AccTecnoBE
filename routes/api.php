@@ -17,6 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // == Compras ==
 Route::get('compras',[Compras::class, 'getAll']);
 Route::post('compras',[Compras::class, 'add']);
+Route::put('compras',[Compras::class, 'update']);
 Route::get('compras/{id}',[Compras::class, 'getOne']);
 
 // == Products ==
@@ -26,6 +27,8 @@ Route::post('products/addImage',[Products::class, 'addImage']);
 Route::delete('products/{id}',[Products::class, 'delete']);
 Route::get('products/search/{value}',[Products::class, 'search']);
 Route::get('products/agotados',[Products::class, 'agotados']);
+Route::get('products/categorie/{id}',[Products::class, 'productById']);
+Route::get('products/news',[Products::class, 'news']);
 
 // == Categories ==
 Route::get('categories',[Categories::class, 'principal']);
@@ -41,3 +44,13 @@ Route::post('getAllUserThisMonth',[Users::class, 'add']);
 
 Route::get('getAllSalesThisMonth',[Compras::class, 'getAllThisMonth']);
 Route::get('generateYearChart',[Compras::class, 'generateYearChart']);
+
+
+
+/* TODO
+    - Nuevos productos
+    - Mas vendidos
+    - Mejorar compra y carro
+    - Me gusta (GET, POST, DELETE)
+    - 
+*/

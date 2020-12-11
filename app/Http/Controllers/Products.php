@@ -22,6 +22,7 @@ class Products extends Controller
         } else {
             $task = Product::where('title', 'LIKE', "%$value%")
             ->orWhere('description', 'LIKE', "%$value%")
+            ->orWhere('model', 'LIKE', "%$value%")
             ->get();
         }
         return $task;
@@ -95,6 +96,18 @@ class Products extends Controller
 
     public function agotados() {
         $task = Product::where('count', '<=', '2')->get();
+        return $task;
+    }
+
+    public function news() {
+        $task = Product::paginate(15);
+        return $task;
+    }
+    
+    public function productById($id) {
+        $task = Product::where('categorieId', '=', $id)
+        ->orWhere('subCategorieId', '=', $id)
+        ->get();
         return $task;
     }
 

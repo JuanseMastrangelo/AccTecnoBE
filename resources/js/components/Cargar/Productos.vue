@@ -11,7 +11,7 @@
 
             <div class="search-result">
                 <div class="search-input">
-                    <form v-on:submit.prevent="search()" action="#" method="POST" name="search_form">
+                    <form v-on:submit.prevent="search(true);" action="#" method="POST" name="search_form">
                         <a href="#" class="search-close" v-on:click="clearInputSearch()" data-clear-form="#search">&times;</a>
                         <input type="text" class="form-control form-control-lg" v-model="searchValue" value="" placeholder="Buscar producto..." />
                     </form>
@@ -125,19 +125,35 @@
                                             </a>
                                         </div>
                                         <div class="search-result-content">
-                                            <h3>
-                                                <a href="#" v-bind:class="item.count == 2 ? 'text-dark' : item.count == 1 ? 'text-warning' : 'text-danger'">
-                                                    {{item.title}} <small>({{item.count}})</small>
-                                                </a>
-                                            </h3>
-                                            <p v-html="item.description">
-                                                {{item.description}}
-                                            </p>
-                                            <a class="mr-4"><b>{{item.saleValue | currency}}</b></a>
-                                            <a href="#" class="mr-4">Estadísticas</a>
-                                            <a href="#" class="mr-4" style="cursor: pointer" v-on:click="editar(item)" data-toggle="modal" data-target=".bd-example-modal-lg">Editar</a>
-                                            <a href="#" v-if="!loadingDelete" class="mr-4 text-danger" v-on:click="deleteItem(item)">Eliminar</a>
-                                            <a href="#" v-if="loadingDelete" class="mr-4 text-danger"><div class="spinner-border spinner-border-sm mr-1" role="status"></div> Eliminando...</a>
+                                            <div class="col-12 p-0 h-100" style="display: grid;">
+                                                <div class="col-12 p-0">
+                                                    <h3>
+                                                        <a href="#" v-bind:class="item.count == 2 ? 'text-dark' : item.count == 1 ? 'text-warning' : 'text-danger'">
+                                                            {{item.title}} <small>({{item.count}})</small>
+                                                        </a>
+                                                    </h3>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-bordered table-sm mt-2">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="p-0">Fecha de creación</td>
+                                                                    <td class="p-0"><time-ago :refresh="60" :datetime="new Date(item.created_at)" locale="es" :long="true" tooltip></time-ago></td>
+                                                                    <td class="p-0">Fecha de modificación</td>
+                                                                    <td class="p-0"><time-ago :refresh="60" :datetime="new Date(item.updated_at)" locale="es" :long="true" tooltip></time-ago></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <p v-html="item.description" style="height: 42px;text-overflow: ellipsis;overflow: hidden;"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 p-0 d-flex align-items-end">
+                                                    <a class="mr-4"><b>{{item.saleValue | currency}}</b></a>
+                                                    <a href="#" class="mr-4">Estadísticas</a>
+                                                    <a href="#" class="mr-4" style="cursor: pointer" v-on:click="editar(item)" data-toggle="modal" data-target=".bd-example-modal-lg">Editar</a>
+                                                    <a href="#" v-if="!loadingDelete" class="mr-4 text-danger" v-on:click="deleteItem(item)">Eliminar</a>
+                                                    <a href="#" v-if="loadingDelete" class="mr-4 text-danger"><div class="spinner-border spinner-border-sm mr-1" role="status"></div> Eliminando...</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -147,7 +163,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -373,7 +389,7 @@
                 }
             },
             methods: {
-                search: function() {
+                search: function(redirect) {
                     this.loadingSearch = true;
                     const value = this.searchValue.trim() === '' ? '$' : this.searchValue;
                     axios.get('/api/products/search/'+ value)
@@ -381,7 +397,7 @@
                         this.data = response.data;
                         this.loadingSearch = false;
                         this.ultimaBusqueda = this.searchValue;
-                        document.getElementById("busqueda-tab").click();
+                        redirect && document.getElementById('busqueda-tab').click();
                     })
                 },
                 clearInputSearch: function () {this.searchValue = '';},

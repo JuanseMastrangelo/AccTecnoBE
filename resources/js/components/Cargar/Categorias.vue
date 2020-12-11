@@ -34,10 +34,11 @@
                                     <div class="list-group-item d-flex align-items-center bg-primary">
                                         <div class="flex-fill">
                                             <div class="text-white">{{item.name}}</div>
-                                            <div class="text-white">{{item.count}} producto/s</div>
+                                            <div class="text-white">{{data.filter(el => el.idParent == item.id).length}} subcategoria/s</div>
                                         </div>
-                                        <div class="width-100">
+                                        <div>
                                             <a v-on:click="edit(item)" data-toggle="modal" class="btn btn-default width-100">Modificar</a>
+                                            <a v-if="data.filter(el => el.idParent == item.id).length === 0" v-on:click="deleteItem(item)" data-toggle="modal" class="btn btn-default">Eliminar</a>
                                         </div>
                                     </div>
                                     <div class="widget-reminder">
@@ -51,7 +52,7 @@
                                                     </div>
                                                     <div class="d-flex">
                                                             <a v-on:click="edit(itemChild)" data-toggle="modal" class="btn btn-default mr-2">Modificar</a>
-                                                            <a v-if="!loadingDelete" v-on:click="deleteItem(itemChild)" data-toggle="modal" class="btn btn-default">Eliminar</a>
+                                                            <a v-if="!loadingDelete && (itemChild.count === 0)" v-on:click="deleteItem(itemChild)" data-toggle="modal" class="btn btn-default">Eliminar</a>
                                                             <a v-if="loadingDelete" v-on:click="deleteItem(itemChild)" data-toggle="modal" class="btn btn-default text-danger"><div class="spinner-border spinner-border-sm mr-1" role="status"></div> Eliminando...</a>
                                                     </div>
                                                 </div>
@@ -140,7 +141,7 @@
                     form: {
                         name: '',
                         idParent: '',
-                        files: []
+                        files: null
                     },
                     editando: null,
                     changes: false

@@ -30,6 +30,15 @@ class Compras extends Controller
         return $task;
     }
 
+    public function update(Request $request) {
+        $id = $request->get('id');
+        $idProduct = $request->get('idProduct');
+        $status = $request->get('status');
+        $descripcion = $request->get('descripcion');
+        $task = ComprasModel::where('id', $id)->update(['idProduct' => $idProduct, 'status' => $status, 'descripcion' => $descripcion]);
+        return $task;
+    }
+
     public function getOne($id) {
         $task = ComprasModel::find($id);
         return $task;
