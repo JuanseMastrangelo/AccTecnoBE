@@ -53,7 +53,7 @@
         </div>
         <div class="col-6 col-lg-5">
         <div class="mt-1">
-        <i class="fa fa-fw fa-retweet fs-28px text-black-transparent-5"></i>
+        <i class="fa fa-fw fa-sync-alt fs-28px text-black-transparent-5"></i>
         </div>
         <div class="mt-1">
         <div>Referral Sales</div>

@@ -3,7 +3,7 @@
         <div class="col-12 d-flex justify-content-between align-center pl-0">
             <h1 class="text-white">{{title}}</h1>
             <div class="d-flex align-center">
-                <button v-on:click="refreshData" class="btn btn-sm btn-light" style="height: 35px;" ><i class="fas fa-retweet"></i></button>
+                <button v-on:click="refreshData" class="btn btn-sm btn-light" style="height: 35px;" ><i class="fas fa-sync-alt"></i></button>
             </div>
         </div>
 
@@ -38,6 +38,9 @@
                         </a>
                         <a v-else-if="props.formattedRow[props.column.field] ==='pending'">
                             <span class="badge badge-info">Pendiente</span>
+                        </a>
+                        <a v-else-if="props.formattedRow[props.column.field] ==='processing'">
+                            <span class="badge badge-light">En proceso</span>
                         </a>
                         <a v-else>
                             <span class="badge badge-light">{{props.formattedRow[props.column.field]}}</span>

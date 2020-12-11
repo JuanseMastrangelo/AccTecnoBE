@@ -8,7 +8,7 @@
             <h1 class="page-header">
                 Categorias
             </h1>
-            <button class="btn btn-sm btn-primary" v-on:click="getCategories()"><i class="fa fa-retweet"></i> Refrescar datos</button>
+            <button class="btn btn-sm btn-primary" v-on:click="getCategories()"><i class="fa fa-sync-alt"></i> Refrescar datos</button>
 
 
             <div class="search-result">

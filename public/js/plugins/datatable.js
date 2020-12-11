@@ -6983,6 +6983,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -23302,7 +23305,7 @@ var render = function() {
                 staticStyle: { height: "35px" },
                 on: { click: _vm.refreshData }
               },
-              [_c("i", { staticClass: "fas fa-retweet" })]
+              [_c("i", { staticClass: "fas fa-sync-alt" })]
             )
           ])
         ]
@@ -23360,6 +23363,13 @@ var render = function() {
                         ? _c("a", [
                             _c("span", { staticClass: "badge badge-info" }, [
                               _vm._v("Pendiente")
+                            ])
+                          ])
+                        : props.formattedRow[props.column.field] ===
+                          "processing"
+                        ? _c("a", [
+                            _c("span", { staticClass: "badge badge-light" }, [
+                              _vm._v("En proceso")
                             ])
                           ])
                         : _c("a", [

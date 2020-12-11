@@ -16,7 +16,7 @@
                         <input type="text" class="form-control form-control-lg" v-model="searchValue" value="" placeholder="Buscar producto..." />
                     </form>
                 </div>
-                <button class="btn btn-sm btn-primary" v-on:click="search()"><i class="fa fa-retweet"></i> Refrescar datos</button>
+                <button class="btn btn-sm btn-primary" v-on:click="search()"><i class="fa fa-sync-alt"></i> Refrescar datos</button>
 
         
                 <ul class="search-tab nav nav-tabs" id="myTab" role="tablist">

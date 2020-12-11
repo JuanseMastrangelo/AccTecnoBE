@@ -117,7 +117,7 @@
     <div class="col-12 d-flex justify-content-between align-center px-0 mt-3">
       <h1>Estadísticas</h1>
       <div class="d-flex align-center">
-        <!-- <button v-on:click="refreshData" class="btn btn-sm btn-primary" style="height: 35px;" ><i class="fas fa-retweet"></i></button> -->
+        <!-- <button v-on:click="refreshData" class="btn btn-sm btn-primary" style="height: 35px;" ><i class="fas fa-sync-alt"></i></button> -->
       </div>
     </div>
     <div class="row">
