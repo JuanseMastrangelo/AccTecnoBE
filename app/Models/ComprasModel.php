@@ -9,5 +9,5 @@ class ComprasModel extends Model
 {
     use HasFactory;
     protected $table = 'buys';
-    protected $fillable = [ 'idProduct', 'status', 'descripcion' ];
+    protected $fillable = [ 'idBuy', 'status', 'userData', 'items' ];
 }
