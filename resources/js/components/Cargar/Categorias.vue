@@ -1,16 +1,25 @@
 <template>
-    <div class="col-12">
+    <div>
+      <div class="col-12 border-bottom d-flex justify-content-between align-items-center bg-white mb-4 py-3 px-4" style="border-width: 2px!important;">
+          <h5 class="m-0">Categorías</h5>
+          <div>
+                <button class="btn btn-sm btn-primary" v-on:click="getCategories()"><i class="fa fa-sync-alt"></i> Refrescar datos</button>
+                <button id="navbarDropdown" class="btn btn-sm btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-h"></i>
+                </button>
+
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" v-on:click="nuevo()" href="#">
+                        Nuevo
+                    </a>
+                </div>
+          </div>
+      </div>
+      
+        <div class="mx-auto col-11">
+
+
         <div id="content" class="col-12 p-2 m-auto">
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Cargar</a></li>
-                <li class="breadcrumb-item active">CATEGORIAS</li>
-            </ul>
-            <h1 class="page-header">
-                Categorias
-            </h1>
-            <button class="btn btn-sm btn-primary" v-on:click="getCategories()"><i class="fa fa-sync-alt"></i> Refrescar datos</button>
-
-
             <div class="search-result">
 
         
@@ -121,6 +130,7 @@
                 </div>
             </div>
         </div>
+        </div>
     </div>
 </template>
 
@@ -211,6 +221,7 @@
                         done()
                     }
                 },
+                nuevo: function() {document.getElementById('nuevo-tab').click();},
                 saveCategorie: function() {
                     this.loadingForm = true;
                     const body = {

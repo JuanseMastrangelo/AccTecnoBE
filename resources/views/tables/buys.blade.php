@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div>
     <compras-table-component :data="{{ $users }}"></compras-table-component>
 </div>
 @endsection

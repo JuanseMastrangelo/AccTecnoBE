@@ -1,23 +1,29 @@
 <template>
-    <div class="col-12">
-        <div id="content" class="col-12 p-2 m-auto">
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Cargar</a></li>
-                <li class="breadcrumb-item active">PRODUCTOS</li>
-            </ul>
-            <h1 class="page-header">
-            Búsqueda rápida <small>busqueda por nombre y descripción...</small>
-            </h1>
-
-            <div class="search-result">
-                <div class="search-input">
+    <div>
+      <div class="col-12 border-bottom d-flex justify-content-between align-items-center bg-white mb-4 py-3 px-4" style="border-width: 2px!important;">
+            <h5 class="my-0">Productos</h5>
+          <div class="d-flex row align-items-center col-5">
+                <div class="search-input col">
                     <form v-on:submit.prevent="search(true);" action="#" method="POST" name="search_form">
-                        <a href="#" class="search-close" v-on:click="clearInputSearch()" data-clear-form="#search">&times;</a>
-                        <input type="text" class="form-control form-control-lg" v-model="searchValue" value="" placeholder="Buscar producto..." />
+                        <input type="search" class="form-control form-control-sm" v-model="searchValue" value="" placeholder="Buscar producto..." />
                     </form>
                 </div>
-                <button class="btn btn-sm btn-primary" v-on:click="search()"><i class="fa fa-sync-alt"></i> Refrescar datos</button>
+                <button class="btn btn-sm btn-primary mr-2" v-on:click="getCategories()"><i class="fa fa-sync-alt"></i> Refrescar datos</button>
+                <button id="navbarDropdown" class="btn btn-sm btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-h"></i>
+                </button>
 
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" v-on:click="nuevo()" href="#">
+                        Nuevo
+                    </a>
+                </div>
+          </div>
+      </div>
+      
+        <div class="mx-auto col-11">
+
+            <div class="search-result">
         
                 <ul class="search-tab nav nav-tabs" id="myTab" role="tablist">
                     <li class="search-tab-item">
@@ -421,6 +427,7 @@
                 detectChanges() {
                     this.changes = true;
                 },
+                nuevo: function() {document.getElementById('nuevo-tab').click();},
                 saveProduct: function() {
                     this.loadingForm = true;
                     axios.post('/api/products', this.form)

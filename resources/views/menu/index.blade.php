@@ -29,7 +29,7 @@ style="z-index: 2;position: fixed;min-height: 1000px;border-width: 2px!important
             </div>
             <li class="border-bottom my-2 mx-4"></li>
             <div class="col-12 p-0 my-3">
-                <h6 class="mx-4 text-secondary">Cargar</h6>
+                <h6 class="mx-4 text-primary">Cargar</h6>
                 <li class="nav-item">
                     <a class="nav-link px-4 py-1" href="{{ route('cargarProductos') }}" style="font-size: 16px;">
                         <i class="fas fa-vector-square mr-2"></i> Productos

@@ -87,8 +87,8 @@
                 @if (Auth::check())
                     @include('menu.index')
                 @endguest
-                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                    <main class="py-4 mt-5">
+                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 p-0 mt-5">
+                    <main class="mt-3">
                         @yield('content')
                     </main>
                 </main>
