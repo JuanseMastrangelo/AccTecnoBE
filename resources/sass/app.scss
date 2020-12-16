@@ -10,3 +10,11 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 @import "~vue-good-table/dist/vue-good-table.css";
+
+.nav-link:hover {
+    background-color: rgba(200,200,200,.2);
+}
+
+body {
+    overflow-x: hidden!important;
+}

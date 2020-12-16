@@ -15516,3 +15516,11 @@ a.text-dark:focus {
   }
 }
 
+.nav-link:hover {
+  background-color: rgba(200, 200, 200, 0.2);
+}
+
+body {
+  overflow-x: hidden !important;
+}
+

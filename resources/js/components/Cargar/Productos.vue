@@ -1,6 +1,6 @@
 <template>
     <div class="col-12">
-        <div id="content" class="col-9 p-2 m-auto">
+        <div id="content" class="col-12 p-2 m-auto">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Cargar</a></li>
                 <li class="breadcrumb-item active">PRODUCTOS</li>
