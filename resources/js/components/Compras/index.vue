@@ -69,8 +69,9 @@
                     <div class="card" v-for="item in JSON.parse(elSelected.items)" v-bind:key="item.id">
                         <div class="d-flex col-12 p-0">
                             <div class="col-md-3 card-image"
-                            style="background-image: url('https://chequeado.com/wp-content/plugins/accelerated-mobile-pages/images/SD-default-image.png');
-                            background-repeat: no-repeat;background-size: cover; border-radius: 5px 0px 0px 5px">
+                            style="background-repeat: no-repeat;background-size: contain; border-radius: 5px 0px 0px 5px; background-position: center;"
+                            v-bind:style="'background-image: url('+item.image+');'"
+                            >
                             </div>
                             <div class="col-md-6 card-body">
                                 <h4 class="card-title">{{item.title}}</h4>
@@ -107,6 +108,10 @@
                                 <button type="button" class="btn btn-outline-success col-12">Comprobar</button>
                             </div>
                         </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
                         </form>
                     </div>
                 </div>

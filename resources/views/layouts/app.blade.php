@@ -9,7 +9,7 @@
 
     <title>MarketPlace</title>
     <link rel="icon" type="image/png" href="images/logo.png">
-
+    
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
@@ -19,10 +19,11 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
 </head>
 <body>
+    
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light" style="z-index: 3; background: #3D4C67">
             <div class="container">

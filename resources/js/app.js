@@ -13,7 +13,6 @@ Vue.component('cargar-categorias-component', require('./components/Cargar/Catego
 
 Vue.component('compras-table-component', require('./components/Compras/index.vue').default);
 
- 
 Vue.use(Vue2Filters)
 Vue.use(Vuelidate)
 const app = new Vue({
