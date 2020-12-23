@@ -41,11 +41,11 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        SantiGraviano\LaravelMercadoPago\Providers\MercadoPagoServiceProvider::class
     ],
 
 
     'aliases' => [
-
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
@@ -83,6 +83,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'TableConstants' => App\Providers\ConstantTablesServiceProvider::class,
+        'MP' => SantiGraviano\LaravelMercadoPago\Facades\MP::class
     ],
 
 ];

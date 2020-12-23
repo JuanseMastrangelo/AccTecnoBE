@@ -1,11 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\ComprasModel;
 use App\Models\User;
 
+use MP;
 
 use Carbon\Carbon;
 
@@ -15,29 +14,13 @@ class Compras extends Controller
     {
         $this->middleware('auth');
         return view('tables.buys', [
-            'users' => ComprasModel::all()
+            'orders' =>  MP::get_all_merchant_order()
         ]);
     }
 
     public function getAll()
     {
-        $task = ComprasModel::all();
-        return $task;
-    }
-
-    public function add(Request $request) {
-        $task = ComprasModel::create($request->all());
-        return $task;
-    }
-
-    public function update(Request $request) {
-        $id = $request->get('id');
-        $idBuy = $request->get('idBuy');
-        $status = $request->get('status');
-        $userData = $request->get('userData');
-        $items = $request->get('items');
-        $task = ComprasModel::where('id', $id)->update(['idBuy' => $idBuy, 'status' => $status, 'userData' => $userData, 'items' => $items]);
-        return $task;
+        return MP::get_all_merchant_order();
     }
 
     public function getOne($id) {
@@ -53,7 +36,7 @@ class Compras extends Controller
         return $task;
     }
 
-    
+
     public function getAllLastMonth() {
         $task = ComprasModel::where(
             //'created_at', '>=', Carbon::now()->subDays(30)->toDateTimeString() DEVULVE TODO 30 dias antes
@@ -66,7 +49,7 @@ class Compras extends Controller
     public function generateYearChart() {
         $MonthNumber = Carbon::now()->month;
         $arrayRes = [];
-        for ($month=0; $month <= 12; $month++) { 
+        for ($month=0; $month <= 12; $month++) {
             $salesInThisMonth = ComprasModel::whereMonth( 'created_at', '=', $month+1 )
                                 -> where('status', 'success')
                                 ->count();

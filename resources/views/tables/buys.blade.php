@@ -2,6 +2,6 @@
 
 @section('content')
 <div>
-    <compras-table-component :data="{{ $users }}"></compras-table-component>
+    <compras-table-component></compras-table-component>
 </div>
 @endsection

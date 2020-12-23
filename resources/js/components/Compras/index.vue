@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="col-12 border-bottom d-flex justify-content-between bg-white mb-4 py-3 px-4" style="border-width: 2px!important;">
+        <div class="col-12 border-bottom align-items-center d-flex justify-content-between bg-white mb-4 py-3 px-4" style="border-width: 2px!important;">
             <h5 class="m-0">Estados de compra</h5>
             <div>
                 <button class="btn btn-sm btn-primary" v-on:click="loadTable()"><i class="fa fa-sync-alt"></i> Refrescar datos</button>
@@ -127,7 +127,6 @@
     import {AgGridVue} from "ag-grid-vue";
     export default {
         name: 'App',
-        props: ['data'],
         data() {
             return {
                 columnDefs: null,
@@ -154,7 +153,7 @@
             onGridReady(params) {
                 this.gridApi = params.api;
                 this.columnApi = params.columnApi;
-                this.refreshTable(this.data); // Todo Listo para recibir informacion (PRIMER PEDIDO DE DATOS)
+                this.loadTable();
             },
             refreshTable(dataTable) {
                 this.gridApi.showLoadingOverlay();
@@ -171,8 +170,9 @@
                 }, 0);
             },
             loadTable() {
-                axios.get("/api/compras").then((response) => {
-                    this.refreshTable(response.data);
+                axios.get("/api/compras").then(({data}) => {
+                    console.log(data);
+                    this.refreshTable(data.response.elements);
                 });
             },
             exportAll(selected) {
@@ -217,7 +217,7 @@
             this.columnDefs = [
                 {
                     headerName: 'Identificador',
-                    field: 'idBuy',
+                    field: 'id',
                     filter: true,
                     headerCheckboxSelection: true,
                     headerCheckboxSelectionFilteredOnly: true,
@@ -225,24 +225,25 @@
                 },
                 {
                     headerName: 'Estado',
-                    field: 'status',
+                    field: 'order_status',
                     cellClass: 'text-center',
-                    cellRenderer: data => ( data.value === 'success' ?
-                                            '<i class="fa fa-check mr-1 text-success"></i> Compra' : 
-                                            data.value === 'pending' ? '<i class="fa fa-check mr-1 text-info"></i> Pendiente' : 
-                                            data.value === 'processing' ? '<i class="fa fa-check mr-1 text-secondary"></i> En proceso' :
-                                            '<i class="fa fa-cross mr-1 text-danger"></i> Fallido'
-                                            )
+                    cellRenderer: data => ( data.value === 'paid' ?
+                                                '<i class="fa fa-check mr-1 text-success"></i> Compra' :
+                                                data.value === 'payment_required' ? '<i class="fa fa-check mr-1 text-info"></i> Pendiente' :
+                                                    data.value === 'processing' ? '<i class="fa fa-check mr-1 text-secondary"></i> En proceso' :
+                                                        '<i class="fa fa-cross mr-1 text-danger"></i> Fallido'
+                                        )
                 },
                 {
-                    headerName: 'Precio y Cant prod',
-                    field: 'items',
-                    cellRenderer: data => { if (data.value) {let total = 0; JSON.parse(data.value).map(el => total += el.unit_price); return '$ '+total + ' ('+JSON.parse(data.value).length+')';} else {return ''} }
+                    headerName: 'Precio',
+                    field: 'shipping_cost',
+                    cellRenderer: data => {if (data) { return `$ ${data.value + data.data.total_amount}` }else { return ''}},
+                    cellClass: 'text-center'
                 },
                 {
                     headerName: 'Comprador',
-                    field: 'userData',
-                    cellRenderer: data => {if (data.value) { return JSON.parse(data.value).userData.name }else {return ''}}
+                    field: 'additional_info',
+                    cellRenderer: data => {if (data.value) { return data.value }else {return ''}}
                 }
             ];
         }
@@ -251,7 +252,7 @@
 <style lang="scss">
   @import "../../../../node_modules/ag-grid-community/dist/styles/ag-grid.css";
   @import "../../../../node_modules/ag-grid-community/dist/styles/ag-theme-alpine.css";
-  
+
     .custom-divider {
         width: 1px;
         height: 20px;

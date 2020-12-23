@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Compras;
+use App\Http\Controllers\MercadoPago;
 use App\Http\Controllers\Products;
 use App\Http\Controllers\Users;
 use App\Http\Controllers\Categories;
@@ -46,11 +47,16 @@ Route::get('getAllSalesThisMonth',[Compras::class, 'getAllThisMonth']);
 Route::get('generateYearChart',[Compras::class, 'generateYearChart']);
 
 
+// MercadoPago
+Route::post('createPreference',[MercadoPago::class, 'createPreference']);
+Route::post('notification',[MercadoPago::class, 'notificationIPN']);
+
+
 
 /* TODO
     - Nuevos productos
     - Mas vendidos
     - Mejorar compra y carro
     - Me gusta (GET, POST, DELETE)
-    - 
+    -
 */
